@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CooldownRepository")
@@ -24,11 +25,13 @@ class Cooldown
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"public"})
      */
     private $crime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"public"})
      */
     private $organized_crime;
 

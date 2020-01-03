@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CrimeController extends BaseController
 {
     /**
-     * @Route("/standard", name="standard_crime")
+     * @Route("/standard", name="standard_crime", methods={"POST"})
      * @param Crime                  $crime
      *
      * @param EntityManagerInterface $em
@@ -37,12 +37,15 @@ class CrimeController extends BaseController
 
         $em->flush();
 
-        return new JsonResponse(['message' => $message]);
+        return new JsonResponse([
+            'message' => $message,
+            'cooldown' => $user->getCooldown()->getCrime()->format(DATE_ISO8601)
+        ]);
     }
 
     /**
      *
-     * @Route("/organized", name="organized_crime")
+     * @Route("/organized", name="organized_crime", methods={"POST"})
      * @param Crime                  $crime
      *
      * @param EntityManagerInterface $em
@@ -61,6 +64,9 @@ class CrimeController extends BaseController
 
         $em->flush();
 
-        return new JsonResponse(['message' => $message]);
+        return new JsonResponse([
+            'message' => $message,
+            'cooldown' => $user->getCooldown()->getOrganizedCrime()->format(DATE_ISO8601)
+        ]);
     }
 }

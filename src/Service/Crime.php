@@ -65,7 +65,7 @@ class Crime
         }
 
         // set cooldown
-        $user->getCooldown()->setCrime(Time::addMinutes(1));
+        $user->getCooldown()->setCrime(Time::addSeconds(5));
 
         return $message;
     }

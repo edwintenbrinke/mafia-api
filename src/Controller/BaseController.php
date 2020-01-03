@@ -17,6 +17,10 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 abstract class BaseController extends AbstractController
 {
+    public const SERIALIZE_PUBLIC = ['public'];
+    public const SERIALIZE_PORTAL = ['portal'];
+    public const SERIALIZE_PROFILE = ['profile'];
+
     /**
      * @param Request $request
      * @param string  $form_class

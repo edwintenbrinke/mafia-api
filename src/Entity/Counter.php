@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\HasLifecycleCallbacks()
@@ -25,11 +26,13 @@ class Counter
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $crime = 0;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $organized_crime = 0;
 

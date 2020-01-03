@@ -19,6 +19,20 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findProfileForOne(User $user)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('q', 'cooldown', 'counter')
+            ->join('q.counter', 'counter')
+            ->join('q.cooldown', 'cooldown')
+            ->where('q.id = :id')
+            ->setParameters([
+                'id' => $user->getId()
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

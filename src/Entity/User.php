@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DatetimeInfoTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\HasLifecycleCallbacks()
@@ -22,26 +23,31 @@ class User
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $experience;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $cash;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $bank;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Counter", mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"public"})
      */
     private $counter;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Cooldown", mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"public"})
      */
     private $cooldown;
 
