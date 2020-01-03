@@ -4,11 +4,8 @@ namespace App\Service;
 
 use App\Entity\Car;
 use App\Entity\User;
-use App\Helper\Message;
 use App\Helper\Random;
-use App\Helper\Time;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class Car

@@ -53,7 +53,7 @@ class Crime
                 $message = Message::failure();
         }
 
-        $user->getCooldown()->setGrandTheftAuto(Time::addSeconds(30));
+        $user->getCooldown()->setGrandTheftAuto(Time::addSeconds(15));
 
         return $message;
     }

@@ -7,8 +7,7 @@
     "org_crime_chance": 0,
     "gta_chance": 10,
     "gta_class": {
-      "1": 1,
-      "2": 0
+      "1": 1
     }
   },
   {
@@ -19,8 +18,7 @@
     "org_crime_chance": 15,
     "gta_chance": 15,
     "gta_class": {
-      "1": 2.5,
-      "2": 0
+      "1": 2.5
     }
   },
   {
@@ -31,8 +29,7 @@
     "org_crime_chance": 20,
     "gta_chance": 20,
     "gta_class": {
-      "1": 5,
-      "2": 0
+      "1": 5
     }
   },
   {
@@ -127,6 +124,7 @@
     "org_crime_chance": 60,
     "gta_chance": 60,
     "gta_class": {
+      "0": 100,
       "1": 25,
       "2": 5
     }
