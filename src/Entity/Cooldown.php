@@ -35,10 +35,17 @@ class Cooldown
      */
     private $organized_crime;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"public"})
+     */
+    private $grand_theft_auto;
+
     public function __construct()
     {
         $this->crime = new DateTime();
         $this->organized_crime = new DateTime();
+        $this->grand_theft_auto = new DateTime();
     }
 
     public function getId(): int
@@ -78,6 +85,18 @@ class Cooldown
     public function setOrganizedCrime(\DateTime $organized_crime): self
     {
         $this->organized_crime = $organized_crime;
+
+        return $this;
+    }
+
+    public function getGrandTheftAuto(): ?\DateTime
+    {
+        return $this->grand_theft_auto;
+    }
+
+    public function setGrandTheftAuto(\DateTime $grand_theft_auto): self
+    {
+        $this->grand_theft_auto = $grand_theft_auto;
 
         return $this;
     }

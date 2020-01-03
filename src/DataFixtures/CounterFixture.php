@@ -27,6 +27,10 @@ class CounterFixture extends Fixture implements DependentFixtureInterface
         $counter = new Counter();
         $counter->setUser($this->getReference(UserFixture::USER));
         $manager->persist($counter);
+
+        $counter = new Counter();
+        $counter->setUser($this->getReference(UserFixture::USER.'2'));
+        $manager->persist($counter);
         $manager->flush();
     }
 }

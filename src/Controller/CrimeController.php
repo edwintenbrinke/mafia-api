@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Helper\Time;
 use App\Repository\UserRepository;
+use App\Service\CarService;
 use App\Service\Crime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,7 +45,6 @@ class CrimeController extends BaseController
     }
 
     /**
-     *
      * @Route("/organized", name="organized_crime", methods={"POST"})
      * @param Crime                  $crime
      *
@@ -67,6 +67,30 @@ class CrimeController extends BaseController
         return new JsonResponse([
             'message' => $message,
             'cooldown' => $user->getCooldown()->getOrganizedCrime()->format(DATE_ISO8601)
+        ]);
+    }
+
+    /**
+     * @Route("/grand-theft-auto", name="standard_grand_theft_auto", methods={"POST"})
+     * @param Crime                  $crime
+     * @param EntityManagerInterface $em
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function grandTheftAuto(Crime $crime, EntityManagerInterface $em)
+    {
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find(1);
+        $user->setExperience(1000000);
+
+        $message = $crime->executeGta($user);
+
+        $em->flush();
+
+        return new JsonResponse([
+            'message' => $message,
+            'cooldown' => $user->getCooldown()->getGrandTheftAuto()->format(DATE_ISO8601)
         ]);
     }
 }

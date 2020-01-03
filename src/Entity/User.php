@@ -51,6 +51,11 @@ class User
      */
     private $cooldown;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Garage", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $garage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +141,23 @@ class User
         $newUser = null === $cooldown ? null : $this;
         if ($cooldown->getUser() !== $newUser) {
             $cooldown->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    public function getGarage(): ?Garage
+    {
+        return $this->garage;
+    }
+
+    public function setGarage(Garage $garage): self
+    {
+        $this->garage = $garage;
+
+        // set the owning side of the relation if necessary
+        if ($garage->getUser() !== $this) {
+            $garage->setUser($this);
         }
 
         return $this;

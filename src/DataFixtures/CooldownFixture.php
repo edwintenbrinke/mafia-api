@@ -27,6 +27,10 @@ class CooldownFixture extends Fixture implements DependentFixtureInterface
         $cooldown = new Cooldown();
         $cooldown->setUser($this->getReference(UserFixture::USER));
         $manager->persist($cooldown);
+
+        $cooldown = new Cooldown();
+        $cooldown->setUser($this->getReference(UserFixture::USER.'2'));
+        $manager->persist($cooldown);
         $manager->flush();
     }
 }

@@ -59,4 +59,9 @@ class Rank
             );
         }
     }
+
+    public function getCarChance(User $user, int $rank_experience)
+    {
+
+    }
 }

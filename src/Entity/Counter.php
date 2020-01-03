@@ -36,6 +36,12 @@ class Counter
      */
     private $organized_crime = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"public"})
+     */
+    private $grand_theft_auto = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,25 @@ class Counter
     public function addOrganizedCrime(): self
     {
         $this->organized_crime += 1;
+
+        return $this;
+    }
+
+    public function getGrandTheftAuto(): ?int
+    {
+        return $this->grand_theft_auto;
+    }
+
+    public function setGrandTheftAuto(int $grand_theft_auto): self
+    {
+        $this->grand_theft_auto = $grand_theft_auto;
+
+        return $this;
+    }
+
+    public function addGrandTheftAuto(): self
+    {
+        $this->grand_theft_auto += 1;
 
         return $this;
     }

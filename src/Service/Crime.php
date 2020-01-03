@@ -18,11 +18,44 @@ class Crime
 
     private $translator;
     private $rank;
+    private $car;
 
-    public function __construct(Rank $rank, TranslatorInterface $translator)
+    public function __construct(Rank $rank, CarService $car, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->rank = $rank;
+        $this->car = $car;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @throws \Exception
+     */
+    public function executeGta(User $user)
+    {
+        $rank = $this->rank->getUserRank($user);
+
+        // check cooldown
+        Time::isFuture($user->getCooldown()->getGrandTheftAuto());
+
+        $amount = null;
+        $chance = Random::chance();
+        switch(true) {
+            case $chance < $rank->gta_chance:
+                $message = $this->car->getCar($user, $rank);
+
+                $user->addExperience(50);
+                $user->getCounter()->addGrandTheftAuto();
+                break;
+            default:
+                //failed
+                $message = Message::failure();
+        }
+
+        $user->getCooldown()->setGrandTheftAuto(Time::addSeconds(30));
+
+        return $message;
     }
 
     /**
@@ -39,7 +72,7 @@ class Crime
         // RANK: Empty suit
 
         // check cooldown
-        Time::isFuture($user->getCooldown()->getCrime());
+        Time::isFuture($user->getCooldown()->getGrandTheftAuto());
 
         $amount = null;
         $chance = Random::chance();
@@ -65,7 +98,7 @@ class Crime
         }
 
         // set cooldown
-        $user->getCooldown()->setCrime(Time::addSeconds(5));
+        $user->getCooldown()->setCrime(Time::addSeconds(30));
 
         return $message;
     }
