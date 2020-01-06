@@ -1,0 +1,71 @@
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: stream_and_slack
+            channels: ['!request', '!request_4xx', '!event']
+        crit_request:
+            type: fingers_crossed
+            action_level: critical
+            channels: ['request']
+            handler: stream_and_slack
+
+        # make sure we both stream to file and send to slack
+        stream_and_slack:
+            type: group
+            members:
+                - streamed
+                #- slack_deduplicated #TODO implement fluentd, this won't be necessary then
+
+        # write to file prod.log
+        streamed:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: info
+            max_files: 14
+            channels: ['!request_4xx']
+
+        # slack
+        slack_deduplicated:
+            type:    deduplication
+            handler: slack
+            time:    60 # how many seconds to ignore duplicate logs
+        slack:
+            type: slackwebhook
+            webhook_url: "%env(SLACK_WEBHOOK_URL)%"
+            channel: "%env(SLACK_CHANNEL)%"
+            bot_name: SPINpay
+            icon_emoji: ":dancing_banana:"
+            level: error
+            use_short_attachment: true
+
+        # separate prod.4xx.log catches all request errors (not critical, those go to prod.log)
+        request_filter_crit:
+            type: filter
+            handler: request4xx
+            accepted_levels: [error]
+        request4xx:
+            type: rotating_file
+            level: info
+            max_files: 7
+            channels: ['request', 'request_4xx']
+            path: "%kernel.logs_dir%/%kernel.environment%.4xx.log"
+
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine"]
+
+        # deprecations
+        deprecation:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+            max_files: 7
+        deprecation_filter:
+            type: filter
+            handler: deprecation
+            max_level: info
+            channels: ["php"]
+
+

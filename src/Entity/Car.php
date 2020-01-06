@@ -6,6 +6,7 @@ use App\Helper\Random;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
@@ -21,21 +22,25 @@ class Car
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"public"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $damage;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"public"})
      */
     private $image_path;
 

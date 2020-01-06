@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -20,7 +21,7 @@ class UserController extends BaseController
      * @param SerializerInterface $serializer
      * @param UserRepository      $user_repository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getProfile(SerializerInterface $serializer, UserRepository $user_repository)
     {

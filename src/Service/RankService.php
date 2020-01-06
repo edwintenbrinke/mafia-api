@@ -9,7 +9,7 @@ use App\Exception\RankException;
  * Class Rank
  * @author Edwin ten Brinke <edwin.ten.brinke@extendas.com>
  */
-class Rank
+class RankService
 {
     public const RANKS = [
         'Empty Suit' => 0,

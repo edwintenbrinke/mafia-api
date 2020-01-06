@@ -26,7 +26,7 @@ class CarService
      * @param User $user
      * @param      $rank
      *
-     * @return string
+     * @return array
      * @throws \Exception
      */
     public function getCar(User $user, $rank)
@@ -36,6 +36,7 @@ class CarService
         // sort the array
         krsort($array_ranks);
 
+        $car = null;
         $chance = Random::chance();
         foreach ($array_ranks as $key => $gta_class)
         {
@@ -55,12 +56,12 @@ class CarService
                 $car->setGarage($user->getGarage());
 
                 $this->em->persist($car);
-                return 'message ' . $car->getName();
+                return ['message ' . $car->getName(), $car];
             }
 
             continue;
         }
 
-        return 'fail';
+        return ['fail', $car];
     }
 }

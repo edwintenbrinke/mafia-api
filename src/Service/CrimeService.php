@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class Crime
  * @author Edwin ten Brinke <edwin.ten.brinke@extendas.com>
  */
-class Crime
+class CrimeService
 {
     public const CRIME_JACKPOT_CHANCE = 2.5;
 
@@ -20,7 +20,7 @@ class Crime
     private $rank;
     private $car;
 
-    public function __construct(Rank $rank, CarService $car, TranslatorInterface $translator)
+    public function __construct(RankService $rank, CarService $car, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->rank = $rank;
@@ -39,11 +39,12 @@ class Crime
         // check cooldown
         Time::isFuture($user->getCooldown()->getGrandTheftAuto());
 
+        $car = null;
         $amount = null;
         $chance = Random::chance();
         switch(true) {
             case $chance < $rank->gta_chance:
-                $message = $this->car->getCar($user, $rank);
+                list($message, $car) = $this->car->getCar($user, $rank);
 
                 $user->addExperience(50);
                 $user->getCounter()->addGrandTheftAuto();
@@ -53,9 +54,9 @@ class Crime
                 $message = Message::failure();
         }
 
-        $user->getCooldown()->setGrandTheftAuto(Time::addSeconds(15));
+        $user->getCooldown()->setGrandTheftAuto(Time::addSeconds(2));
 
-        return $message;
+        return [$message, $car];
     }
 
     /**
@@ -72,7 +73,7 @@ class Crime
         // RANK: Empty suit
 
         // check cooldown
-        Time::isFuture($user->getCooldown()->getGrandTheftAuto());
+        Time::isFuture($user->getCooldown()->getCrime());
 
         $amount = null;
         $chance = Random::chance();
@@ -98,7 +99,7 @@ class Crime
         }
 
         // set cooldown
-        $user->getCooldown()->setCrime(Time::addSeconds(30));
+        $user->getCooldown()->setCrime(Time::addSeconds(2));
 
         return $message;
     }
@@ -114,7 +115,7 @@ class Crime
         $rank = $this->rank->getUserRank($user);
 
         //TODO prison
-        Rank::isAllowed($user, Rank::RANKS['Deliveryboy']);
+        RankService::isAllowed($user, RankService::RANKS['Deliveryboy']);
         Time::isFuture($user->getCooldown()->getOrganizedCrime());
 
         $amount = null;
