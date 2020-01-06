@@ -21,22 +21,14 @@ class CarFixture extends Fixture implements DependentFixtureInterface
 
 
         /** @var \App\Entity\Car $car */
-        $car = new Car();
-        $car->setName('bmw');
-        $car->setDamage(10);
-        $car->setPrice(800);
-        $car->setImagePath('/example');
+        $car = new Car('Bugatti Veyron', 'bugatti_veyron.jpg', 100000, 20);
 
         $this->setReference(self::car, $car);
         $garage->addCar($car);
         $manager->persist($car);
 
         /** @var \App\Entity\Car $car */
-        $car = new Car();
-        $car->setName('toyota');
-        $car->setDamage(10);
-        $car->setPrice(1800);
-        $car->setImagePath('/example2');
+        $car = new Car('Bugatti Veyron', 'bugatti_veyron.jpg', 100000, 40);
 
         $this->setReference(self::car.'2', $car);
         $garage2->addCar($car);

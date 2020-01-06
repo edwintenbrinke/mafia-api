@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DatetimeInfoTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="App\Repository\GarageRepository")
  */
 class Garage
 {
+    use DatetimeInfoTrait;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

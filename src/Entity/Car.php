@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DatetimeInfoTrait;
 use App\Helper\Random;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,10 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
  */
 class Car
 {
+    use DatetimeInfoTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

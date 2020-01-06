@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DatetimeInfoTrait;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="App\Repository\CooldownRepository")
  */
 class Cooldown
 {
+    use DatetimeInfoTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

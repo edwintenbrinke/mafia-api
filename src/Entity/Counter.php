@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DatetimeInfoTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -11,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Counter
 {
+    use DatetimeInfoTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
