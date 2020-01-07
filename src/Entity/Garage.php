@@ -6,6 +6,7 @@ use App\Entity\Traits\DatetimeInfoTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\HasLifecycleCallbacks()
@@ -19,6 +20,7 @@ class Garage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"public"})
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Garage
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Car", mappedBy="garage")
+     * @Groups({"public"})
      */
     private $cars;
 

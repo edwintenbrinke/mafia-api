@@ -36,6 +36,7 @@ class CarService
         // sort the array
         krsort($array_ranks);
 
+        // check if they get a fancier car
         $car = null;
         $chance = Random::chance();
         foreach ($array_ranks as $key => $gta_class)
@@ -47,21 +48,35 @@ class CarService
             }
 
             if ($chance < $gta_class) {
-                // create car
-                $car_key = array_rand($this->cars->$key);
-                $car_info = $this->cars->$key[$car_key];
 
-                /** @var Car $car */
-                $car = Car::createFromJson($car_info);
-                $car->setGarage($user->getGarage());
-
-                $this->em->persist($car);
-                return ['message ' . $car->getName(), $car];
+                return $this->createCar($user, $key);
             }
 
             continue;
         }
 
-        return ['fail', $car];
+        // default car
+        return $this->createCar($user, '0');
+    }
+
+    /**
+     * @param User   $user
+     * @param string $key
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function createCar(User $user, string $key)
+    {
+        $car_key = array_rand($this->cars->$key);
+        $car_info = $this->cars->$key[$car_key];
+
+        /** @var Car $car */
+        $car = Car::createFromJson($car_info);
+        $car->setGarage($user->getGarage());
+
+        $this->em->persist($car);
+
+        return ['message ' . $car->getName(), $car];
     }
 }

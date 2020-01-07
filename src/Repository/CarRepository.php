@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Car;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class CarRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Car::class);
+    }
+
+    public function findAllForUser(User $user)
+    {
+        return $this->createQueryBuilder('q')
+            ->join('q.garage', 'garage')
+            ->where('garage.user = :user')
+            ->setParameters([
+                'user' => $user
+            ])
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
